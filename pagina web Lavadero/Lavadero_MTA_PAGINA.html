@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lavadero MTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <style>
+/* Fuente moderna y estilos de texto */
+body {
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  letter-spacing: 0.01em;
+  color: #e3eafc;
+  background: linear-gradient(135deg, #0a2540 0%, #133b5c 100%);
+  min-height: 100vh;
+}
+
+/* Títulos */
+h1, h2, h3 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #e3eafc;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: 2.6rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+/* Textos generales */
+p, li, label, input, select, textarea, button, a {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1.08rem;
+  font-weight: 400;
+  color: #b3c7e6;
+  letter-spacing: 0.01em;
+}
+
+/* Enlaces */
+a {
+  font-weight: 600;
+  color: #4fc3f7;
+  text-decoration: none;
+  transition: color 0.2s, box-shadow 0.2s;
+  border-bottom: 2px solid transparent;
+}
+a:hover {
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+  background: rgba(255, 236, 179, 0.08);
+  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.10);
+}
+
+/* Box general translúcido */
+.contenedor-general {
+  background: rgba(19, 43, 92, 0.22);
+  border-radius: 28px;
+  padding: 40px 32px;
+  margin: 40px auto;
+  max-width: 900px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  text-align:center;
+}
+
+/* Box más oscuro para títulos importantes */
+.box-titulo {
+  background: linear-gradient(90deg, rgba(10, 25, 47, 0.95) 80%, rgba(255,204,0,0.10) 100%);
+  border-radius: 18px;
+  padding: 18px 28px;
+  display: inline-block;
+  box-shadow: 0 4px 16px rgba(31,38,135,0.18), 0 0 0 4px rgba(255,204,0,0.08);
+  margin-bottom: 24px;
+  color: #fff;
+  border-left: 6px solid #ff6666;
+}
+
+/* Elimina los backgrounds de secciones individuales */
+header,
+main,
+footer,
+.servicios,
+.formulario-contacto,
+.galeria {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Botones modernos */
+button,
+.formulario-contacto button {
+  background: #128c7e;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 16px rgba(255,102,102,0.18);
+  transition: background 0.2s, transform 0.18s, box-shadow 0.2s filer 0.18s;
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+  margin: 8px 0;
+  letter-spacing: 0.03em;
+}
+button:hover,
+.formulario-contacto button:hover {
+  background:  #25d366;
+  color: #133b5c;
+  transform: scale(1.06);
+  box-shadow: 0 8px 24px rgba(255, 102, 102, 0.18);
+}
+
+/* Inputs y selects modernos */
+input, textarea, select {
+  background: rgba(255,255,255,0.10);
+  border: 1.5px solid #4fc3f7;
+  border-radius: 10px;
+  color: #accbe4;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  font-size: 16px;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+input:focus, textarea:focus, select:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+  background: rgba(255,255,255,0.18);
+}
+
+/* Navbar moderno */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(19, 43, 92, 0.85);
+  border-radius: 18px;
+  margin: 24px auto 32px auto;
+  max-width: 800px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+.navbar li {
+  margin: 0 20px;
+}
+.navbar a {
+  color: #e3eafc;
+  font-size: 18px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+  position: relative;
+  font-weight: bold;
+}
+.navbar a:hover {
+  background: rgba(79,195,247,0.18);
+  color: #ffcc00;
+}
+
+/* Galería moderna */
+.galeria .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.galeria .grid img {
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(31,38,135,0.18);
+  transition: transform 0.4s, box-shadow 0.4s;
+  width: 100%;
+  cursor: pointer;
+  background: #133b5c;
+}
+.galeria .grid img:hover {
+  transform: scale(1.08) rotate(1deg);
+  box-shadow: 0 8px 32px rgba(31,38,135,0.22);
+}
+
+/* Scrollbar moderno */
+::-webkit-scrollbar {
+  width: 10px;
+  background: rgba(19,43,92,0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: #4fc3f7;
+  border-radius: 8px;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+h1, h2 {
+  animation: slideIn 0.8s ease forwards;
+}
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.8s ease;
+}
+.fade-in.show {
+  opacity: 1;
+}
+
+/* Servicios */
+.servicios-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.servicio-item {
+  background: rgba(19, 43, 92, 0.32);
+  color: #e3eafc;
+  border-radius: 14px;
+  padding: 18px 32px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(31,38,135,0.10);
+  transition: 
+    background 0.25s,
+    box-shadow 0.25s,
+    transform 0.18s,
+    color 0.18s,
+    border 0.18s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+}
+
+.servicio-item:hover {
+  background: linear-gradient(90deg, #1976d2 60%, #ff6666 100%);
+  color: #133b5c;
+  box-shadow: 0 6px 24px #1976d2, 0 0 0 4px rgba(255,204,0,0.10);
+  transform: scale(1.04);
+  border-color: #ff6666;
+}
+.servicio-item::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  border-radius: 14px 0 0 14px;
+  background: linear-gradient(180deg, #ff6666 0%, #ff6666 100%);
+  opacity: 0.18;
+}
+
+/* Estilos del acordeón */
+.accordion {
+  background: rgba(19, 43, 92, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 16px 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.accordion-item {
+  border-bottom: 1px solid rgba(79,195,247,0.15);
+}
+.accordion-item:last-child {
+  border-bottom: none;
+}
+.accordion-btn {
+  background: rgba(19, 43, 92, 0.35);
+  color: #e3eafc;
+  font-size: 1.1rem;
+  padding: 14px 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s, color 0.3s;
+  font-weight: 700;
+  border-left: 6px solid #ff6661;
+}
+.accordion-btn:hover,
+.accordion-btn.active {
+  background: linear-gradient(90deg, #1976d2 60%, #ff6666 100%);
+  color: #133b5c;
+  border-left: 6px solid #ff6666;
+}
+.accordion-content {
+  padding: 0 18px 18px 18px;
+  display: none;
+  overflow: hidden;
+  color: #e3eafc;
+  font-size: 1rem;
+  border-top: 1px solid rgba(79,195,247,0.15);
+}
+
+/* Modal */
+.modal-servicio {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(19,43,92,0.35);
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.modal-servicio[style*="display: flex"] {
+  display: flex !important;
+}
+.modal-servicio-contenido {
+  background: linear-gradient(120deg, rgba(10, 25, 47, 0.98) 80%, rgba(255,204,0,0.10) 100%);
+  color: #e3eafc;
+  border-radius: 18px;
+  padding: 32px 28px 24px 28px;
+  box-shadow: 0 8px 32px 0 #1976d2, 0 0 0 4px rgba(255,204,0,0.08);
+  min-width: 280px;
+  max-width: 90vw;
+  max-height: 80vh;
+  text-align: center;
+  position: relative;
+  animation: slideIn 0.4s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#descripcion-servicio {
+  background: rgba(19, 43, 92, 0.92);
+  color: #fff;
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-top: 18px;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 8px #ffcc00;
+  max-width: 100%;
+  word-break: break-word;
+  border-left: 4px solid #ffcc00;
+}
+.cerrar-modal-servicio {
+  position: absolute;
+  top: 12px; right: 18px;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.cerrar-modal-servicio:hover {
+  color: #ff6666;
+}
+.btn-instagram {
+  display: inline-block;
+  background: linear-gradient(90deg, #fd5949 0%, #d6249f 50%, #285AEB 100%);
+  color: #fff !important;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 4px 16px rgba(214,36,159,0.18);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.18s, filter 0.18s;
+  cursor: pointer;
+  margin: 8px 0;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  text-align: center;
+}
+.btn-instagram:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 0 16px 4px #fd5949, 0 8px 24px rgba(214,36,159,0.25);
+  transform: scale(1.06);
+  color: #fff !important;
+  text-decoration: none;
+}
+.btn-instagram i {
+  font-size: 1.3em;
+  vertical-align: middle;
+}
+
+/* Animación para el carrusel */
+.fade-in-img {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.fade-in-img.show {
+  opacity: 1;
+}
+.fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.25s;
+}
+/* Animación para el carrusel */
+.fade-in-img {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.fade-in-img.show {
+  opacity: 1;
+}
+.fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.25s;
+}
+ </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar">
+    
+  <ul>
+ <li><a href="#inicio" onclick="mostrarSeccion('principal');return false;">Servicios</a></li>
+<li><a href="#" onclick="mostrarSeccion('formulario-servicios');return false;">Reservar</a></li>
+ 
+<li>
+  <a href="#galeria" onclick="mostrarSeccion('principal'); setTimeout(function(){ document.getElementById('galeria').scrollIntoView({behavior:'smooth'}); }, 100); return false;">
+    Galería
+  </a>
+</li>
+<li><a href="#" onclick="mostrarSeccion('sobre-nosotros');return false;">Nosotros</a></li> 
+
+  </ul>
+</nav>
+
+<div class="contenedor-general">
+    <header class="fade-in" id="inicio">
+      <img src="img/logo.png" alt="Logo Lavadero MTA" style="max-width: 120px;margin-bottom: 18px; display: block; margin-left: auto;margin-right: auto;">
+      <h1 class="box-titulo" id="titulo-principal">Lavadero MTA</h1>
+    </header>
+    
+<div id="principal">
+  <main>
+    
+    <p>Pasión por el detalle, amor por tu auto.</p>
+
+    
+    
+
+    
+   <!-- Servicios que ofrezco -->
+<section id="servicios" class="servicios fade-in">
+  <h2>Servicios que ofrezco</h2>
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-btn">Servicios Básicos</button>
+      <div class="servicios-lista" style="display: none;">
+        <div class="servicio-item">Limpieza interior</div>
+        <div class="servicio-item">Lavado exterior</div>
+        <div class="servicio-item">Aspirado completo</div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">Servicios Premium</button>
+      <div class="servicios-lista" style="display: none;">
+        <div class="servicio-item">Pulido de carrocería</div>
+        <div class="servicio-item">Tratamiento cerámico</div>
+        <div class="servicio-item">Limpieza y desinfección de tapizados</div>
+        <div class="servicio-item">Pulida de faros</div>
+        <div class="servicio-item">Pulida de chapería</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</form>
+
+<section class="galeria fade-in" id="galeria">
+  <h2>Galería de trabajos</h2>
+  <div class="grid">
+    <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/20685579/338385_903005.jpeg" alt="Trabajo 1" class="fade-in">
+    <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/20685579/647996_270986.jpeg" alt="Trabajo 2" class="fade-in">
+    <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/20685579/94498_811704.jpeg" alt="Trabajo 3" class="fade-in">
+    <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/20685579/156922_106218.jpeg" alt="Trabajo 3" class="fade-in">
+  </div>
+  <div style="text-align:center; margin-top: 24px;">
+    <a href="https://www.instagram.com/" target="_blank" class="btn-instagram">
+      <i class="fab fa-instagram" style="margin-right:8px;"></i>
+      Visitar Instagram
+    </a>
+  </div>
+</section>
+
+  </main>
+</div>
+<div>
+<!-- Sección de formulario de servicios (tipo página) -->
+<section id="formulario-servicios" class="fade-in" style="display:none;">
+  <h2 class="box-titulo">Reservar Servicio</h2>
+  <form id="formulario">
+    <input type="text" id="nombre" placeholder="Tu nombre" required>
+    <input type="text" id="vehiculo" placeholder="Modelo del vehículo" required>
+    <select id="tipo-servicio" required>
+      <option value="">Seleccioná tipo de servicio</option>
+      <option value="basico">Servicios Básicos</option>
+      <option value="premium">Servicios Premium</option>
+    </select>
+    <select id="servicio" required disabled>
+      <option value="">Seleccioná un servicio</option>
+    </select>
+    <button type="submit">
+      <i class="fab fa-whatsapp" style="margin-right:8px;"></i>
+      Enviar por WhatsApp
+    </button>
+  </form>
+  <button onclick="mostrarSeccion('principal')" style="margin-top:18px;">Volver</button>
+</section>
+</div>
+ <section id="sobre-nosotros" class="fade-in" style="display:none;">
+  <h2 class="box-titulo">Sobre Nosotros</h2>
+  <p>
+    Somos Lavadero MTA, apasionados por el detalle y el cuidado de tu vehículo.<br>
+    Nuestro equipo está comprometido con la excelencia y la satisfacción de cada cliente.
+  </p>
+  <div id="carrusel-nosotros" style="display: flex; flex-direction: column; align-items: center; gap: 12px;"></div>
+  <button onclick="mostrarSeccion('principal')">Volver</button>
+</section>
+</div>
+  <footer style="margin-top: 40px;">
+    <p>© 2025 Mi Sitio Web</p>
+  </footer>
+  
+  <script>
+  const faders = document.querySelectorAll('.fade-in');
+
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      } else {
+        entry.target.classList.remove('show');
+       
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  faders.forEach(fader => {
+    appearOnScroll.observe(fader);
+  });
+</script>
+
+
+<!-- Modal de descripción de servicio -->
+<div id="modal-servicio" class="modal-servicio">
+  <div class="modal-servicio-contenido">
+    <span id="cerrar-modal-servicio" class="cerrar-modal-servicio">&times;</span>
+    <h3 id="titulo-servicio"></h3>
+    <p id="descripcion-servicio"></p>
+  </div>
+</div>
+
+
+
+<script>
+  const tipoServicio = document.getElementById("tipo-servicio");
+  const servicio = document.getElementById("servicio");
+
+  const servicios = {
+    basico: [
+      "Ducha y aspirado",
+      "Menos motor",
+      "Lavado completo"
+    ],
+    premium: [
+      "Tratamiento cerámico",
+      "Limpieza y desinfección de tapizados",
+      "Pulida de faros",
+      "Pulida de chapería"
+    ]
+  };
+
+  tipoServicio.addEventListener("change", function () {
+  const tipo = this.value;
+  servicio.innerHTML = '<option value="">Seleccioná un servicio</option>';
+
+  if (servicios[tipo]) {
+    servicios[tipo].forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s;
+      opt.textContent = s;
+      servicio.appendChild(opt);
+    });
+    servicio.disabled = false;
+  } else {
+    servicio.disabled = true;
+  }
+});
+
+  document.getElementById("formulario").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const vehiculo = document.getElementById("vehiculo").value.trim();
+    const servicioElegido = servicio.value;
+
+   const texto = 
+    "¡Hola! 😄 Quiero reservar un turno en Lavadero MTA.🚗✨" +
+    "\n\nme llamo " + nombre +
+    "\n mi vehiculo es un " + vehiculo +
+    "\nestoy interesado en el servicio de " + servicioElegido +
+    "\n\n¡Gracias!";
+    const telefono = "5959868963";
+    const url = `https://wa.me/${telefono}?text=${encodeURIComponent(texto)}`;
+
+    window.open(url, "_blank");
+  });
+</script>
+
+
+<script>
+  // Descripciones de servicios
+  const descripciones = {
+    "Limpieza interior": "Limpieza profunda de alfombras, tapizados, paneles y detalles interiores. Elimina polvo, manchas y deja tu auto como nuevo.",
+    "Lavado exterior": "Lavado completo de la carrocería, llantas y cristales con productos premium. Incluye secado y detalles de terminación.",
+    "Pulido de carrocería": "Eliminación de rayas superficiales y restauración del brillo original de la pintura mediante pulido profesional.",
+    "Aspirado completo": "Aspirado minucioso de todo el interior, incluyendo asientos, alfombras, baúl y rincones difíciles."
+  };
+
+  // Mostrar modal al hacer click en un servicio
+  document.querySelectorAll('.servicio-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.getElementById('titulo-servicio').textContent = this.textContent;
+    document.getElementById('descripcion-servicio').textContent = descripciones[this.textContent] || "Próximamente más información.";
+    document.getElementById('modal-servicio').style.display = 'flex';
+  });
+});
+
+  // Cerrar modal
+  document.getElementById('cerrar-modal-servicio').onclick = function() {
+    document.getElementById('modal-servicio').style.display = 'none';
+  };
+  // Cerrar modal al hacer click fuera del contenido
+  document.getElementById('modal-servicio').onclick = function(e) {
+    if (e.target === this) this.style.display = 'none';
+  };
+</script>
+
+
+<script>
+  // Funcionalidad del acordeón
+  document.querySelectorAll('.accordion-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const content = this.nextElementSibling;
+    const isOpen = content.style.display === 'block';
+
+    // Cerrar todos los contenidos
+    document.querySelectorAll('.servicios-lista').forEach(item => {
+      item.style.display = 'none';
+    });
+
+    // Si no estaba abierto, abrir el seleccionado
+    if (!isOpen) {
+      content.style.display = 'block';
+    }
+  });
+});
+</script>
+
+<script>
+function mostrarSeccion(id) {
+  // Oculta todas las secciones tipo página
+  document.getElementById('principal').style.display = (id === 'principal') ? '' : 'none';
+  document.getElementById('sobre-nosotros').style.display = (id === 'sobre-nosotros') ? '' : 'none';
+  document.getElementById('formulario-servicios').style.display = (id === 'formulario-servicios') ? '' : 'none';
+  // Mostrar el título solo en la principal
+  const titulo = document.getElementById('titulo-principal');
+  if (titulo) {
+    titulo.style.display = (id === 'principal') ? '' : 'none';
+  }
+}
+</script>
+<script>
+const imagenesNosotros = [
+  {
+    src: "img/Galeria_Nosotros/fede2.jpeg",
+    descripcion: "Federico - Encarcado de las terminaciones, tiene un ojo detallista, que lo hace perfecto para ver hasta la ultima mota de polvo en tu tablero."
+  },
+  {
+    src: "img/Galeria_Nosotros/julio.jpeg",
+    descripcion: "Julio - Especialista en lavado, deja tu vehiculo brillando, sea cual sea el modelo o el tamaño, no queda ni una mancha de barro."
+  },
+  {
+    src: "img/Galeria_Nosotros/cesar.jpeg",
+    descripcion: "César - Encargado del equipo, se encarga principalmente del control de calidad y la parte administrativa del lavadero."
+  }
+];
+
+let indiceCarrusel = 0;
+let animando = false;
+
+function mostrarCarruselNosotros(direccion = 0) {
+  if (animando) return; // Evita doble click rápido
+  const carrusel = document.getElementById('carrusel-nosotros');
+  const imgActual = carrusel.querySelector('img');
+  animando = true;
+
+  // Si hay imagen, animar salida
+  if (imgActual) {
+    imgActual.classList.remove('show');
+    imgActual.classList.add('fade-out');
+    setTimeout(() => {
+      cambiarImagenCarrusel(carrusel, direccion);
+    }, 250);
+  } else {
+    cambiarImagenCarrusel(carrusel, direccion);
+  }
+}
+
+function cambiarImagenCarrusel(carrusel, direccion) {
+  if (typeof direccion === "number" && direccion !== 0) {
+    indiceCarrusel = (indiceCarrusel + direccion + imagenesNosotros.length) % imagenesNosotros.length;
+  }
+  const { src, descripcion } = imagenesNosotros[indiceCarrusel];
+  carrusel.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <button id="anterior-nosotros" style="font-size:2rem; background:none; border:none; color:#4fc3f7; cursor:pointer;">&#8592;</button>
+      <img src="${src}" alt="Foto equipo" class="fade-in" style="max-width:320px; max-height:340px; border-radius:16px; box-shadow:0 4px 16px #000; opacity:0;">
+      <button id="siguiente-nosotros" style="font-size:2rem; background:none; border:none; color:#4fc3f7; cursor:pointer;">&#8594;</button>
+    </div>
+    <div style="margin-top:8px; color:#b3c7e6;">${indiceCarrusel+1} / ${imagenesNosotros.length}</div>
+    <div style="margin-top:8px; color:#e3eafc; font-size:1.08rem;">${descripcion}</div>
+  `;
+
+  // Animación de entrada
+  setTimeout(() => {
+    const nuevaImg = carrusel.querySelector('img');
+    if (nuevaImg) {
+      nuevaImg.style.transition = "opacity 0.4s";
+      nuevaImg.style.opacity = 1;
+      nuevaImg.classList.add('show');
+    }
+    animando = false;
+  }, 30);
+
+  document.getElementById('anterior-nosotros').onclick = () => mostrarCarruselNosotros(-1);
+  document.getElementById('siguiente-nosotros').onclick = () => mostrarCarruselNosotros(1);
+}
+</script>
+<script>
+// Mostrar el carrusel cada vez que se muestra la sección "Sobre Nosotros"
+const observerNosotros = new MutationObserver(() => {
+  if (document.getElementById('sobre-nosotros').style.display !== 'none') {
+    mostrarCarruselNosotros();
+  }
+});
+observerNosotros.observe(document.getElementById('sobre-nosotros'), { attributes: true, attributeFilter: ['style'] });
+</script>
+</body>
+
+</html>
