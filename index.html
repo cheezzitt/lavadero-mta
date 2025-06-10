@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Lavadero MTA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  <style>
@@ -434,6 +435,46 @@ h1, h2 {
 .fade-out {
   opacity: 0 !important;
   transition: opacity 0.25s;
+}
+   /* ...todo tu CSS anterior... */
+
+@media (max-width: 600px) {
+  body {
+    padding: 0 5px;
+    font-size: 15px;
+  }
+  header, footer {
+    padding: 10px 0;
+    font-size: 16px;
+  }
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .navbar li {
+    margin: 10px 0;
+  }
+  .servicios, .formulario-contacto {
+    max-width: 98%;
+    padding: 10px;
+    margin: 15px auto;
+  }
+  .galeria {
+    padding: 20px 5px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    max-width: 100%;
+  }
+  .modal-contenido {
+    width: 95vw;
+    max-width: 98vw;
+  }
+  input, select, button {
+    font-size: 15px;
+    padding: 10px 8px;
+  }
 }
  </style>
 
